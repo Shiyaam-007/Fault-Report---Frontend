@@ -2,7 +2,8 @@
  * Centralised API layer — all fetch calls live here.
  * Vite proxies /api → http://localhost:8080 in development.
  */
-const BASE = '/api';
+const API_HOST = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/$/, '') : '';
+const BASE = `${API_HOST}/api`;
 
 export async function loginAdmin({ username, password }) {
   try {
