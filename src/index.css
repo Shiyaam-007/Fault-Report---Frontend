@@ -45,49 +45,63 @@ body {
   background-clip: text;
 }
 
-/* ── Glow button ─────────────────────────────────────────── */
-.btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: .5rem;
-  padding: .75rem 1.5rem;
-  border: none;
-  border-radius: .75rem;
-  font-weight: 600;
-  font-size: .95rem;
-  cursor: pointer;
-  background: linear-gradient(135deg, var(--brand-500), var(--accent));
-  color: #fff;
-  box-shadow: 0 0 20px rgba(99,102,241,.4);
-  transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+/* ── Topbar with opaque backdrop (prevents scroll bleed-through) ── */
+.topbar-glass {
+  background: rgba(15, 23, 42, 0.92);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-.btn-primary:hover:not(:disabled) {
-  transform: translateY(-2px);
-  box-shadow: 0 0 32px rgba(99,102,241,.6);
-}
-.btn-primary:active  { transform: translateY(0); }
-.btn-primary:disabled { opacity: .5; cursor: not-allowed; }
 
-/* ── Input fields ────────────────────────────────────────── */
+/* ── Glow button & Components ────────────────────────────── */
 @layer components {
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: .5rem;
+    padding: .75rem 1.5rem;
+    border: none;
+    border-radius: .75rem;
+    font-weight: 600;
+    font-size: .95rem;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--brand-500), var(--accent));
+    color: #fff;
+    box-shadow: 0 0 20px rgba(99,102,241,.4);
+    transition: transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+  }
+  .btn-primary:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 0 32px rgba(99,102,241,.6);
+  }
+  .btn-primary:active  { transform: translateY(0); }
+  .btn-primary:disabled { opacity: .5; cursor: not-allowed; }
+
   .field {
     width: 100%;
-    padding: .65rem 1rem;
-    border-radius: .6rem;
+    padding: .75rem 1rem;
+    border-radius: .65rem;
     border: 1px solid var(--glass-border);
     background: rgba(255,255,255,0.06);
     color: #e2e8f0;
-    font-size: .95rem;
+    font-size: 16px; /* 16px prevents unwanted iOS Safari page-zoom on focus */
     outline: none;
     transition: border-color .2s, box-shadow .2s;
   }
   .field:focus {
     border-color: var(--brand-400);
-    box-shadow: 0 0 0 3px rgba(129,140,248,.2);
+    box-shadow: 0 0 0 3px rgba(129,140,248,.25);
   }
-  .field::placeholder { color: #64748b; }
+  .field::placeholder { color: #64748b; font-size: 0.925rem; }
 }
+
+/* ── Mobile Touch Scroll ─────────────────────────────────── */
+.touch-scroll {
+  -webkit-overflow-scrolling: touch;
+  scroll-behavior: smooth;
+}
+
 
 .field-icon-left {
   padding-left: 2.75rem !important;

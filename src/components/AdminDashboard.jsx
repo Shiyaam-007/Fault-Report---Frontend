@@ -56,11 +56,11 @@ function StatusDropdown({ status, onChange, disabled }) {
         type="button"
         disabled={disabled}
         onClick={toggleOpen}
-        className={`inline-flex items-center justify-between gap-2.5 px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer shadow-sm min-w-[130px] ${cfg.btn} ${
+        className={`inline-flex items-center justify-between gap-2 px-2.5 sm:px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer shadow-sm min-w-[115px] sm:min-w-[130px] ${cfg.btn} ${
           disabled ? 'opacity-60 cursor-not-allowed' : ''
         }`}
       >
-        <span className="flex items-center gap-2">
+        <span className="flex items-center gap-1.5 sm:gap-2">
           {disabled ? (
             <span className="w-2 h-2 rounded-full border border-current border-t-transparent animate-spin inline-block" />
           ) : (
@@ -75,7 +75,7 @@ function StatusDropdown({ status, onChange, disabled }) {
 
       {open && (
         <div
-          className={`absolute ${openUp ? 'bottom-full mb-1.5' : 'top-full mt-1.5'} right-0 w-44 rounded-xl border border-slate-700/80 shadow-2xl z-50 p-1.5 animate-fade-in`}
+          className={`absolute ${openUp ? 'bottom-full mb-1.5' : 'top-full mt-1.5'} right-0 w-44 max-w-[calc(100vw-32px)] rounded-xl border border-slate-700/80 shadow-2xl z-50 p-1.5 animate-fade-in`}
           style={{ backgroundColor: '#0f172a' }}
         >
           <div className="px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-slate-400 border-b border-slate-800 mb-1">
@@ -114,9 +114,9 @@ function StatusDropdown({ status, onChange, disabled }) {
 
 function StatCard({ label, value, color }) {
   return (
-    <div className="glass p-5 flex-1 min-w-[130px]">
-      <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider mb-1">{label}</p>
-      <p className={`text-3xl font-extrabold ${color}`}>{value}</p>
+    <div className="glass p-3 sm:p-5 flex-1 min-w-0 text-center sm:text-left">
+      <p className="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider mb-0.5 sm:mb-1 truncate">{label}</p>
+      <p className={`text-2xl sm:text-3xl font-extrabold ${color}`}>{value}</p>
     </div>
   );
 }
@@ -197,24 +197,24 @@ export default function AdminDashboard({ adminUser, onLogout }) {
   return (
     <div className="min-h-screen fade-up">
       {/* ── Topbar ─────────────────────────────────────── */}
-      <header className="sticky top-0 z-20 glass border-b border-white/5 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+      <header className="sticky top-0 z-20 topbar-glass px-3.5 sm:px-6 py-2.5 sm:py-3.5 flex items-center justify-between shadow-xl">
+        <div className="flex items-center gap-2.5 sm:gap-3">
           <span className="live-dot" />
           <div>
-            <h1 className="text-lg font-bold gradient-text tracking-tight leading-tight">
+            <h1 className="text-base sm:text-lg font-bold gradient-text tracking-tight leading-tight">
               Campus Fault Admin
             </h1>
             <p className="text-[10px] text-slate-400">Control Panel & Operations</p>
           </div>
         </div>
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-2.5 sm:gap-4">
           <div className="flex items-center gap-2 text-slate-500 text-xs">
             <span className="hidden sm:inline">{tickets.length} total tickets</span>
             <button
               onClick={load}
               disabled={refreshing}
-              className={`px-3 py-1.5 glass rounded-lg text-xs font-semibold cursor-pointer flex items-center gap-1.5 transition-all ${
+              className={`px-2.5 sm:px-3 py-1.5 glass rounded-lg text-xs font-semibold cursor-pointer flex items-center gap-1.5 transition-all ${
                 justRefreshed
                   ? 'border-emerald-500/50 text-emerald-300 bg-emerald-500/10'
                   : 'text-slate-300 hover:text-white hover:border-cyan-400/50'
@@ -222,13 +222,12 @@ export default function AdminDashboard({ adminUser, onLogout }) {
               title="Refresh tickets list"
             >
               <span className={`inline-block ${refreshing ? 'animate-spin' : ''}`}>↻</span>
-              <span>{refreshing ? 'Refreshing…' : justRefreshed ? 'Updated!' : 'Refresh'}</span>
+              <span className="hidden xs:inline sm:inline">{refreshing ? 'Refreshing…' : justRefreshed ? 'Updated!' : 'Refresh'}</span>
             </button>
           </div>
 
-
           {/* Admin User Badge & Logout */}
-          <div className="flex items-center gap-3 pl-3 border-l border-white/10">
+          <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-3 border-l border-white/10">
             <div className="hidden sm:flex flex-col text-right">
               <span className="text-xs font-bold text-slate-200 leading-tight">
                 {adminUser?.name || 'Bob Admin'}
@@ -240,7 +239,7 @@ export default function AdminDashboard({ adminUser, onLogout }) {
             {onLogout && (
               <button
                 onClick={onLogout}
-                className="px-3 py-1.5 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 font-semibold text-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+                className="px-2.5 sm:px-3 py-1.5 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 font-semibold text-xs transition-colors flex items-center gap-1.5 cursor-pointer"
                 title="Log out of Admin Panel"
               >
                 <span>🚪</span>
@@ -251,31 +250,31 @@ export default function AdminDashboard({ adminUser, onLogout }) {
         </div>
       </header>
 
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+      <main className="max-w-7xl mx-auto px-3.5 sm:px-6 py-5 sm:py-8">
         {/* ── Stat cards ──────────────────────────────── */}
-        <div className="flex flex-wrap gap-4 mb-8">
+        <div className="grid grid-cols-3 gap-2 sm:gap-4 mb-6 sm:mb-8">
           <StatCard label="Open"        value={counts.OPEN}        color="text-indigo-400" />
           <StatCard label="In Progress" value={counts.IN_PROGRESS} color="text-orange-400" />
           <StatCard label="Resolved"    value={counts.RESOLVED}    color="text-green-400"  />
         </div>
 
         {/* ── Filters ─────────────────────────────────── */}
-        <div className="flex flex-wrap items-center gap-3 mb-6">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 mb-6">
           <input
-            className="field max-w-xs"
+            className="field w-full sm:max-w-xs text-xs"
             placeholder="🔍 Search tickets by title…"
             value={search}
             onChange={e => setSearch(e.target.value)}
           />
-          <div className="flex gap-2">
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar touch-scroll pb-1 sm:pb-0">
             {['ALL', ...STATUSES].map(s => (
               <button
                 key={s}
                 onClick={() => setFilter(s)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all ${
+                className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-all shrink-0 cursor-pointer ${
                   filter === s
                     ? 'bg-indigo-500/30 border-indigo-400 text-indigo-300'
-                    : 'border-white/10 text-slate-400 hover:border-white/20'
+                    : 'border-white/10 text-slate-400 hover:border-white/20 hover:text-white'
                 }`}
               >
                 {STATUS_CONFIG[s]?.label ?? s}
@@ -306,149 +305,233 @@ export default function AdminDashboard({ adminUser, onLogout }) {
         )}
 
         {/* ── Table ───────────────────────────────────── */}
+        {/* ── Tickets List ───────────────────────────────────── */}
         {!loading && !error && (
-          <div className="glass overflow-visible no-scrollbar">
-            <div className="overflow-visible no-scrollbar min-h-[140px]">
-              <table className="w-full text-sm">
-                <thead>
-                  <tr className="border-b border-white/8 text-xs text-slate-500 uppercase tracking-wider">
-                    <th
-                      className="text-left px-4 py-3 cursor-pointer select-none hover:text-slate-300 transition-colors"
-                      onClick={() => setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))}
-                      title={`Sort by Ticket # (${sortOrder === 'asc' ? 'Ascending' : 'Descending'})`}
-                    >
-                      <span className="inline-flex items-center gap-1.5">
-                        <span>#</span>
-                        <span className="text-[10px] text-cyan-400 font-bold">
-                          {sortOrder === 'asc' ? '▲' : '▼'}
-                        </span>
+          <div>
+            {/* ── Mobile Card List (shown on screens < 768px) ── */}
+            <div className="md:hidden space-y-3.5">
+              {visible.length === 0 && (
+                <div className="glass p-10 text-center text-slate-400 rounded-2xl text-xs">
+                  No tickets match your filter.
+                </div>
+              )}
+              {visible.map((ticket) => (
+                <div
+                  key={`mobile-${ticket.id}`}
+                  className="glass p-4 rounded-2xl border border-white/10 hover:border-indigo-500/30 transition-all flex flex-col gap-3 shadow-md"
+                >
+                  {/* Card Header: Ticket ID, Date & Status */}
+                  <div className="flex items-center justify-between gap-2">
+                    <div className="flex items-center gap-2">
+                      <span className="font-mono text-xs font-bold text-cyan-400 bg-cyan-500/10 px-2 py-0.5 rounded-md border border-cyan-500/25">
+                        #{ticket.id}
                       </span>
-                    </th>
-                    <th className="text-left px-4 py-3">Title</th>
-                    <th className="text-left px-4 py-3 hidden lg:table-cell">Created</th>
-                    <th className="text-left px-4 py-3">Photo</th>
-                    <th className="text-left px-4 py-3">Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {visible.length === 0 && (
-                    <tr>
-                      <td colSpan={5} className="text-center text-slate-500 py-16">
-                        No tickets match your filter.
-                      </td>
-                    </tr>
+                      <span className="text-[11px] text-slate-400">
+                        {new Date(ticket.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+                    <StatusDropdown
+                      status={ticket.status}
+                      disabled={updatingId === ticket.id}
+                      onChange={(newStatus) => handleStatusChange(ticket.id, newStatus)}
+                    />
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="text-sm font-bold text-white leading-snug">
+                    {ticket.title}
+                  </h3>
+
+                  {/* Photo Preview if available */}
+                  {ticket.hasPhoto && (
+                    <div
+                      onClick={() => openEnlargedPhoto(ticket)}
+                      className="relative cursor-pointer overflow-hidden rounded-xl border border-white/10 group/img w-full h-40 bg-slate-900/60"
+                    >
+                      <img
+                        src={photoUrl(ticket.id)}
+                        alt={`Ticket #${ticket.id}`}
+                        className="w-full h-full object-cover rounded-xl group-hover/img:scale-105 transition-transform"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity">
+                        <span className="text-xs text-white font-bold bg-slate-900/90 px-3 py-1 rounded-md">
+                          🔍 View Photo
+                        </span>
+                      </div>
+                      <span className="absolute bottom-2 right-2 text-[10px] bg-slate-900/80 text-slate-200 px-2 py-0.5 rounded backdrop-blur-sm">
+                        🔍 Tap to enlarge
+                      </span>
+                    </div>
                   )}
-                  {visible.map((ticket) => (
-                    <tr key={`group-${ticket.id}`} className="contents">
-                      <tr
-                        key={ticket.id}
-                        className={`border-b border-white/5 transition-colors hover:bg-white/3 cursor-pointer ${
-                          expandedId === ticket.id ? 'bg-white/4' : ''
-                        }`}
-                        onClick={() => setExpandedId(expandedId === ticket.id ? null : ticket.id)}
+
+                  {/* Description & Details */}
+                  <div className="pt-2 border-t border-white/5 flex flex-col gap-1.5 text-xs">
+                    {ticket.description ? (
+                      <p className="text-slate-300 leading-relaxed text-xs">
+                        {ticket.description}
+                      </p>
+                    ) : (
+                      <p className="text-slate-500 italic text-[11px]">No description provided.</p>
+                    )}
+                    <div className="flex items-center justify-between text-[10px] text-slate-400 pt-1">
+                      <span>Last updated: {new Date(ticket.updatedAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+                      {ticket.hasPhoto && (
+                        <button
+                          type="button"
+                          onClick={() => openEnlargedPhoto(ticket)}
+                          className="text-cyan-400 font-semibold hover:underline cursor-pointer"
+                        >
+                          View Full Photo
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* ── Desktop Table (hidden on mobile, shown on md+) ── */}
+            <div className="hidden md:block glass overflow-visible no-scrollbar rounded-2xl">
+              <div className="overflow-visible no-scrollbar min-h-[140px]">
+                <table className="w-full text-sm">
+                  <thead>
+                    <tr className="border-b border-white/8 text-xs text-slate-400 uppercase tracking-wider">
+                      <th
+                        className="text-left px-4 py-3 cursor-pointer select-none hover:text-slate-300 transition-colors"
+                        onClick={() => setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))}
+                        title={`Sort by Ticket # (${sortOrder === 'asc' ? 'Ascending' : 'Descending'})`}
                       >
-                        <td className="px-4 py-3 text-slate-500 font-mono text-xs">
-                          #{ticket.id}
-                        </td>
-                        <td className="px-4 py-3 font-semibold text-slate-200 max-w-[280px] truncate">
-                          {ticket.title}
-                        </td>
-                        <td className="px-4 py-3 text-slate-500 text-xs hidden lg:table-cell">
-                          {new Date(ticket.createdAt).toLocaleDateString()}
-                        </td>
-                        <td className="px-4 py-3" onClick={e => e.stopPropagation()}>
-                          {ticket.hasPhoto ? (
-                            <button
-                              type="button"
-                              onClick={() => openEnlargedPhoto(ticket)}
-                              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-indigo-500/20 text-indigo-300 hover:bg-indigo-500/35 border border-indigo-500/30 hover:border-indigo-400 transition-all cursor-pointer group"
-                              title="Click to view photo enlarged"
-                            >
-                              <span className="text-xs group-hover:scale-110 transition-transform">🔍</span>
-                              <span>View Photo</span>
-                            </button>
-                          ) : (
-                            <span className="text-xs text-slate-600">—</span>
-                          )}
-                        </td>
-                        <td className="px-4 py-3" onClick={e => e.stopPropagation()}>
-                          <StatusDropdown
-                            status={ticket.status}
-                            disabled={updatingId === ticket.id}
-                            onChange={(newStatus) => handleStatusChange(ticket.id, newStatus)}
-                          />
+                        <span className="inline-flex items-center gap-1.5">
+                          <span>#</span>
+                          <span className="text-[10px] text-cyan-400 font-bold">
+                            {sortOrder === 'asc' ? '▲' : '▼'}
+                          </span>
+                        </span>
+                      </th>
+                      <th className="text-left px-4 py-3">Title</th>
+                      <th className="text-left px-4 py-3 hidden lg:table-cell">Created</th>
+                      <th className="text-left px-4 py-3">Photo</th>
+                      <th className="text-left px-4 py-3">Status</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {visible.length === 0 && (
+                      <tr>
+                        <td colSpan={5} className="text-center text-slate-500 py-16">
+                          No tickets match your filter.
                         </td>
                       </tr>
-
-                      {/* ── Expanded row — photo + details ── */}
-                      {expandedId === ticket.id && (
-                        <tr key={`${ticket.id}-expand`} className="bg-white/3">
-                          <td colSpan={5} className="px-6 py-5">
-
-                            <div className="flex flex-wrap gap-6">
-                              {/* Photo */}
-                              {ticket.hasPhoto && (
-                                <div className="shrink-0">
-                                  <div className="flex items-center justify-between mb-2">
-                                    <p className="text-xs text-slate-500 uppercase tracking-wider font-semibold">
-                                      Attached Photo
-                                    </p>
-                                    <span className="text-[10px] text-cyan-400 font-medium">Click to enlarge 🔍</span>
-                                  </div>
-                                  <div
-                                    onClick={(e) => {
-                                      e.stopPropagation();
-                                      openEnlargedPhoto(ticket);
-                                    }}
-                                    className="group relative cursor-zoom-in overflow-hidden rounded-xl shadow-lg border border-white/10 hover:border-cyan-400/60 transition-all duration-200"
-                                    title="Click to view enlarged photo"
-                                  >
-                                    <img
-                                      src={photoUrl(ticket.id)}
-                                      alt={`Ticket #${ticket.id}`}
-                                      className="w-72 h-48 sm:w-[440px] sm:h-64 object-cover group-hover:scale-105 transition-transform duration-300"
-                                      loading="lazy"
-                                    />
-                                    <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-semibold text-xs backdrop-blur-[2px]">
-                                      <span className="text-base">🔍</span>
-                                      <span>Click to Enlarge</span>
-                                    </div>
-                                  </div>
-                                </div>
-                              )}
-                              {/* Description + meta */}
-                              <div className="flex-1 min-w-[200px]">
-                                <div className="mb-3 p-3 rounded-lg bg-white/5 border border-white/5 inline-flex flex-wrap items-center gap-4 text-xs">
-                                  <div>
-                                    <span className="text-slate-400">Ticket ID: </span>
-                                    <span className="font-mono text-cyan-400 font-bold">#{ticket.id}</span>
-                                  </div>
-                                  <div>
-                                    <span className="text-slate-400">Created: </span>
-                                    <span className="text-slate-300">{new Date(ticket.createdAt).toLocaleString()}</span>
-                                  </div>
-                                </div>
-
-                                <p className="text-xs text-slate-500 mb-1 uppercase tracking-wider font-semibold">
-                                  Description
-                                </p>
-                                <p className="text-slate-300 text-sm mb-4 leading-relaxed">
-                                  {ticket.description || 'No description provided.'}
-                                </p>
-                                <p className="text-xs text-slate-500 mt-1">
-                                  Last Status Update: {new Date(ticket.updatedAt).toLocaleString()}
-                                </p>
-                              </div>
-
-                            </div>
-
+                    )}
+                    {visible.map((ticket) => (
+                      <tr key={`group-${ticket.id}`} className="contents">
+                        <tr
+                          key={ticket.id}
+                          className={`border-b border-white/5 transition-colors hover:bg-white/3 cursor-pointer ${
+                            expandedId === ticket.id ? 'bg-white/4' : ''
+                          }`}
+                          onClick={() => setExpandedId(expandedId === ticket.id ? null : ticket.id)}
+                        >
+                          <td className="px-4 py-3 text-slate-400 font-mono text-xs">
+                            #{ticket.id}
+                          </td>
+                          <td className="px-4 py-3 font-semibold text-slate-200 max-w-[280px] truncate">
+                            {ticket.title}
+                          </td>
+                          <td className="px-4 py-3 text-slate-400 text-xs hidden lg:table-cell">
+                            {new Date(ticket.createdAt).toLocaleDateString()}
+                          </td>
+                          <td className="px-4 py-3" onClick={e => e.stopPropagation()}>
+                            {ticket.hasPhoto ? (
+                              <button
+                                type="button"
+                                onClick={() => openEnlargedPhoto(ticket)}
+                                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-semibold bg-indigo-500/20 text-indigo-300 hover:bg-indigo-500/35 border border-indigo-500/30 hover:border-indigo-400 transition-all cursor-pointer group"
+                                title="Click to view photo enlarged"
+                              >
+                                <span className="text-xs group-hover:scale-110 transition-transform">🔍</span>
+                                <span>View Photo</span>
+                              </button>
+                            ) : (
+                              <span className="text-xs text-slate-600">—</span>
+                            )}
+                          </td>
+                          <td className="px-4 py-3" onClick={e => e.stopPropagation()}>
+                            <StatusDropdown
+                              status={ticket.status}
+                              disabled={updatingId === ticket.id}
+                              onChange={(newStatus) => handleStatusChange(ticket.id, newStatus)}
+                            />
                           </td>
                         </tr>
-                      )}
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+
+                        {/* ── Expanded row — photo + details ── */}
+                        {expandedId === ticket.id && (
+                          <tr key={`${ticket.id}-expand`} className="bg-white/3">
+                            <td colSpan={5} className="px-6 py-5">
+                              <div className="flex flex-wrap gap-6">
+                                {/* Photo */}
+                                {ticket.hasPhoto && (
+                                  <div className="shrink-0">
+                                    <div className="flex items-center justify-between mb-2">
+                                      <p className="text-xs text-slate-400 uppercase tracking-wider font-semibold">
+                                        Attached Photo
+                                      </p>
+                                      <span className="text-[10px] text-cyan-400 font-medium">Click to enlarge 🔍</span>
+                                    </div>
+                                    <div
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        openEnlargedPhoto(ticket);
+                                      }}
+                                      className="group relative cursor-zoom-in overflow-hidden rounded-xl shadow-lg border border-white/10 hover:border-cyan-400/60 transition-all duration-200"
+                                      title="Click to view enlarged photo"
+                                    >
+                                      <img
+                                        src={photoUrl(ticket.id)}
+                                        alt={`Ticket #${ticket.id}`}
+                                        className="w-72 h-48 sm:w-[440px] sm:h-64 object-cover group-hover:scale-105 transition-transform duration-300"
+                                        loading="lazy"
+                                      />
+                                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2 text-white font-semibold text-xs backdrop-blur-[2px]">
+                                        <span className="text-base">🔍</span>
+                                        <span>Click to Enlarge</span>
+                                      </div>
+                                    </div>
+                                  </div>
+                                )}
+                                {/* Description + meta */}
+                                <div className="flex-1 min-w-[200px]">
+                                  <div className="mb-3 p-3 rounded-lg bg-white/5 border border-white/5 inline-flex flex-wrap items-center gap-4 text-xs">
+                                    <div>
+                                      <span className="text-slate-400">Ticket ID: </span>
+                                      <span className="font-mono text-cyan-400 font-bold">#{ticket.id}</span>
+                                    </div>
+                                    <div>
+                                      <span className="text-slate-400">Created: </span>
+                                      <span className="text-slate-300">{new Date(ticket.createdAt).toLocaleString()}</span>
+                                    </div>
+                                  </div>
+
+                                  <p className="text-xs text-slate-400 mb-1 uppercase tracking-wider font-semibold">
+                                    Description
+                                  </p>
+                                  <p className="text-slate-300 text-sm mb-4 leading-relaxed">
+                                    {ticket.description || 'No description provided.'}
+                                  </p>
+                                  <p className="text-xs text-slate-500 mt-1">
+                                    Last Status Update: {new Date(ticket.updatedAt).toLocaleString()}
+                                  </p>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        )}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         )}

@@ -57,31 +57,31 @@ export default function ImageModal({ image, onClose }) {
     >
       {/* ── Top Header / Metadata Bar ── */}
       <div
-        className="w-full max-w-[96vw] flex items-center justify-between glass px-4 py-3 border border-white/15 shadow-2xl z-20 shrink-0"
+        className="w-full max-w-[98vw] sm:max-w-[96vw] flex items-center justify-between glass px-2.5 sm:px-4 py-2 sm:py-3 border border-white/15 shadow-2xl z-20 shrink-0 rounded-xl sm:rounded-2xl gap-2"
         onClick={(e) => e.stopPropagation()}
       >
-        <div className="flex items-center gap-3 overflow-hidden">
-          <span className="badge badge-open text-xs font-mono font-bold shrink-0">
+        <div className="flex items-center gap-2 sm:gap-3 overflow-hidden min-w-0">
+          <span className="badge badge-open text-[10px] sm:text-xs font-mono font-bold shrink-0 px-2 py-0.5">
             #{image.ticketId}
           </span>
-          <div className="truncate">
-            <h3 id="modal-image-title" className="text-base font-bold text-slate-100 truncate">
+          <div className="truncate min-w-0">
+            <h3 id="modal-image-title" className="text-xs sm:text-base font-bold text-slate-100 truncate">
               {image.title}
             </h3>
-            <p className="text-xs text-slate-400 truncate">
-              {image.date ? `Submitted on ${new Date(image.date).toLocaleString()}` : 'Campus Fault Photo'}
+            <p className="text-[10px] sm:text-xs text-slate-400 truncate">
+              {image.date ? `Submitted ${new Date(image.date).toLocaleDateString()}` : 'Campus Fault Photo'}
             </p>
           </div>
         </div>
 
         {/* Toolbar & Close */}
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+        <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
           {/* Zoom controls */}
           <div className="flex items-center bg-white/5 rounded-lg border border-white/10 p-0.5">
             <button
               type="button"
               onClick={handleZoomOut}
-              className="w-8 h-8 flex items-center justify-center rounded text-slate-300 hover:text-white hover:bg-white/10 text-sm font-bold transition-colors cursor-pointer"
+              className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded text-slate-300 hover:text-white hover:bg-white/10 text-xs sm:text-sm font-bold transition-colors cursor-pointer"
               title="Zoom out (-)"
             >
               −
@@ -89,7 +89,7 @@ export default function ImageModal({ image, onClose }) {
             <button
               type="button"
               onClick={handleResetZoom}
-              className="px-2 h-8 flex items-center justify-center text-xs font-mono font-semibold text-slate-300 hover:text-white transition-colors cursor-pointer"
+              className="px-1.5 sm:px-2 h-7 sm:h-8 flex items-center justify-center text-[10px] sm:text-xs font-mono font-semibold text-slate-300 hover:text-white transition-colors cursor-pointer"
               title="Reset Zoom (0)"
             >
               {Math.round(scale * 100)}%
@@ -97,7 +97,7 @@ export default function ImageModal({ image, onClose }) {
             <button
               type="button"
               onClick={handleZoomIn}
-              className="w-8 h-8 flex items-center justify-center rounded text-slate-300 hover:text-white hover:bg-white/10 text-sm font-bold transition-colors cursor-pointer"
+              className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded text-slate-300 hover:text-white hover:bg-white/10 text-xs sm:text-sm font-bold transition-colors cursor-pointer"
               title="Zoom in (+)"
             >
               +
@@ -119,10 +119,10 @@ export default function ImageModal({ image, onClose }) {
           <button
             type="button"
             onClick={onClose}
-            className="px-3.5 py-1.5 rounded-lg bg-rose-500/25 hover:bg-rose-500/40 text-rose-200 font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer border border-rose-500/30 shadow-lg"
+            className="px-2.5 sm:px-3.5 py-1.5 rounded-lg bg-rose-500/25 hover:bg-rose-500/40 text-rose-200 font-bold text-xs transition-colors flex items-center gap-1.5 cursor-pointer border border-rose-500/30 shadow-lg"
             title="Close enlarged image (Esc)"
           >
-            <span className="text-base leading-none">✕</span>
+            <span className="text-sm sm:text-base leading-none">✕</span>
             <span className="hidden sm:inline">Close</span>
             <kbd className="hidden md:inline-block ml-1 px-1 py-0.5 text-[9px] bg-black/50 rounded text-slate-400 border border-white/10">
               Esc

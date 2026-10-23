@@ -25,12 +25,12 @@ const STATUS_CONFIG = {
 
 function StatCard({ label, value, color, icon }) {
   return (
-    <div className="glass p-5 flex-1 min-w-[130px] relative overflow-hidden">
-      <div className="flex items-center justify-between mb-2">
-        <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider">{label}</p>
-        <span className="text-lg opacity-70">{icon}</span>
+    <div className="glass p-3.5 sm:p-5 flex-1 min-w-0 relative overflow-hidden">
+      <div className="flex items-center justify-between mb-1 sm:mb-2">
+        <p className="text-[10px] sm:text-xs font-semibold text-slate-400 uppercase tracking-wider truncate mr-1">{label}</p>
+        <span className="text-base sm:text-lg opacity-70 shrink-0">{icon}</span>
       </div>
-      <p className={`text-3xl font-extrabold ${color}`}>{value}</p>
+      <p className={`text-2xl sm:text-3xl font-extrabold ${color}`}>{value}</p>
     </div>
   );
 }
@@ -173,45 +173,47 @@ export default function StudentDashboard({ studentUser, onLogout }) {
   return (
     <div className="min-h-screen fade-up pb-16">
       {/* ── Topbar ─────────────────────────────────────────── */}
-      <header className="sticky top-0 z-20 glass border-b border-white/5 px-4 sm:px-8 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-cyan-500 flex items-center justify-center text-xl shadow-lg shadow-indigo-500/20">
+      <header className="sticky top-0 z-20 topbar-glass px-3.5 sm:px-8 py-2.5 sm:py-3.5 flex items-center justify-between shadow-xl">
+        <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-indigo-500 to-cyan-500 flex items-center justify-center text-base sm:text-xl shadow-lg shadow-indigo-500/20 shrink-0">
             🏛️
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="live-dot" />
-              <h1 className="text-base sm:text-lg font-bold gradient-text tracking-tight leading-tight">
+          <div className="min-w-0">
+            <div className="flex items-center gap-1.5 sm:gap-2">
+              <span className="live-dot shrink-0" />
+              <h1 className="text-xs sm:text-base font-bold gradient-text tracking-tight leading-tight truncate">
                 Campus Fault Reporter
               </h1>
             </div>
-            <p className="text-[11px] text-slate-400">Student Portal & Issue Tracker</p>
+            <p className="text-[9px] sm:text-[11px] text-slate-400 truncate hidden xs:block">Student Portal & Issue Tracker</p>
           </div>
         </div>
 
         {/* User Badge & Actions */}
-        <div className="flex items-center gap-3">
-          <button
-            onClick={() => setActiveTab('report')}
-            className="hidden sm:inline-flex btn-primary py-2 px-3.5 text-xs font-bold"
-          >
-            <span>➕</span>
-            <span>Report Fault</span>
-          </button>
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+          <div className="hidden sm:block">
+            <button
+              onClick={() => setActiveTab('report')}
+              className="btn-primary py-2 px-3.5 text-xs font-bold"
+            >
+              <span>➕</span>
+              <span>Report Fault</span>
+            </button>
+          </div>
 
-          <div className="flex items-center gap-3 pl-3 border-l border-white/10">
+          <div className="flex items-center gap-2 sm:gap-3 pl-2 sm:pl-3 border-l border-white/10">
             <div className="flex flex-col text-right">
-              <span className="text-xs font-bold text-slate-200 leading-tight">
+              <span className="text-xs font-bold text-slate-200 leading-tight max-w-[80px] sm:max-w-none truncate">
                 {studentUser?.name || 'Student'}
               </span>
-              <span className="text-[10px] text-indigo-400 font-semibold uppercase tracking-wider">
+              <span className="text-[9px] sm:text-[10px] text-indigo-400 font-semibold uppercase tracking-wider">
                 🎓 Student
               </span>
             </div>
             {onLogout && (
               <button
                 onClick={onLogout}
-                className="px-3 py-1.5 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 font-semibold text-xs transition-colors flex items-center gap-1.5 cursor-pointer"
+                className="px-2.5 sm:px-3 py-1.5 rounded-lg bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 font-semibold text-xs transition-colors flex items-center gap-1.5 cursor-pointer"
                 title="Log out"
               >
                 <span>🚪</span>
@@ -223,51 +225,51 @@ export default function StudentDashboard({ studentUser, onLogout }) {
       </header>
 
       {/* ── Main container ─────────────────────────────────── */}
-      <main className="max-w-6xl mx-auto px-4 sm:px-6 pt-8">
+      <main className="max-w-6xl mx-auto px-3.5 sm:px-6 pt-5 sm:pt-8">
         {/* Welcome Banner */}
-        <div className="glass p-6 sm:p-8 mb-8 relative overflow-hidden border border-white/10">
+        <div className="glass p-5 sm:p-8 mb-6 sm:mb-8 relative overflow-hidden border border-white/10 rounded-2xl">
           <div className="absolute top-0 right-0 w-80 h-80 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none" />
           <div className="relative z-10 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <span className="text-xs font-bold uppercase tracking-wider text-cyan-400 mb-1 inline-block">
+              <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-cyan-400 mb-0.5 sm:mb-1 inline-block">
                 Welcome back
               </span>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
+              <h2 className="text-xl sm:text-3xl font-extrabold text-white">
                 Hi, {studentUser?.name || 'Student'} 👋
               </h2>
-              <p className="text-slate-400 text-xs sm:text-sm mt-1 max-w-xl">
+              <p className="text-slate-400 text-xs sm:text-sm mt-1 max-w-xl leading-relaxed">
                 Track your reported campus infrastructure issues or report a new fault to help keep our facilities safe and functional.
               </p>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="grid grid-cols-2 gap-2 w-full sm:w-auto">
               <button
                 onClick={() => setActiveTab('tickets')}
-                className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
+                className={`px-3 sm:px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 sm:gap-2 ${
                   activeTab === 'tickets'
                     ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-600/30'
                     : 'glass text-slate-300 hover:text-white'
                 }`}
               >
                 <span>📋</span>
-                <span>My Tickets ({counts.TOTAL})</span>
+                <span className="truncate">My Tickets ({counts.TOTAL})</span>
               </button>
               <button
                 onClick={() => setActiveTab('report')}
-                className={`px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
+                className={`px-3 sm:px-4 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer flex items-center justify-center gap-1.5 sm:gap-2 ${
                   activeTab === 'report'
                     ? 'bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow-lg'
                     : 'glass text-slate-300 hover:text-white'
                 }`}
               >
                 <span>📷</span>
-                <span>New Report</span>
+                <span className="truncate">New Report</span>
               </button>
             </div>
           </div>
         </div>
 
         {/* ── Stats Summary ─────────────────────────────────── */}
-        <div className="flex flex-wrap gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-4 mb-6 sm:mb-8">
           <StatCard label="Total Reported" value={counts.TOTAL} color="text-indigo-400" icon="📑" />
           <StatCard label="Pending / Open" value={counts.OPEN} color="text-indigo-300" icon="⏳" />
           <StatCard label="In Progress" value={counts.IN_PROGRESS} color="text-amber-400" icon="🔧" />
@@ -279,12 +281,12 @@ export default function StudentDashboard({ studentUser, onLogout }) {
           <div>
             {/* Filter and Search Bar */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 mb-6">
-              <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex items-center gap-2 overflow-x-auto no-scrollbar touch-scroll pb-1 sm:pb-0">
                 {['ALL', 'OPEN', 'IN_PROGRESS', 'RESOLVED'].map((s) => (
                   <button
                     key={s}
                     onClick={() => setFilter(s)}
-                    className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer ${
+                    className={`px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-semibold border transition-all cursor-pointer shrink-0 ${
                       filter === s
                         ? 'bg-indigo-500/30 border-indigo-400 text-indigo-300'
                         : 'border-white/10 text-slate-400 hover:border-white/20 hover:text-white'
@@ -295,10 +297,10 @@ export default function StudentDashboard({ studentUser, onLogout }) {
                 ))}
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 w-full sm:w-auto">
                 <input
                   type="text"
-                  className="field max-w-xs text-xs"
+                  className="field flex-1 sm:max-w-xs text-xs"
                   placeholder="🔍 Search my tickets…"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
@@ -388,12 +390,12 @@ export default function StudentDashboard({ studentUser, onLogout }) {
                           <div className="mb-4">
                             <div
                               onClick={() => openEnlargedPhoto(t)}
-                              className="relative cursor-pointer overflow-hidden rounded-lg border border-white/10 group/img w-fit"
+                              className="relative cursor-pointer overflow-hidden rounded-xl border border-white/10 group/img w-full sm:w-fit"
                             >
                               <img
                                 src={photoUrl(t.id)}
                                 alt={t.title}
-                                className="w-28 h-20 object-cover rounded-lg group-hover/img:scale-105 transition-transform"
+                                className="w-full sm:w-36 h-40 sm:h-24 object-cover rounded-xl group-hover/img:scale-105 transition-transform"
                                 loading="lazy"
                               />
                               <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover/img:opacity-100 transition-opacity">
@@ -585,6 +587,18 @@ export default function StudentDashboard({ studentUser, onLogout }) {
           </div>
         )}
       </main>
+
+      {/* ── Mobile Floating Action Button ──────────────────── */}
+      {activeTab === 'tickets' && (
+        <button
+          onClick={() => setActiveTab('report')}
+          className="sm:hidden fixed bottom-6 right-5 z-30 px-4 py-3 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-600 text-white shadow-2xl shadow-indigo-600/50 flex items-center gap-2 font-bold text-xs cursor-pointer border border-white/20 active:scale-95 transition-transform"
+          aria-label="Report new fault"
+        >
+          <span className="text-base">➕</span>
+          <span>Report Fault</span>
+        </button>
+      )}
 
       {/* ── Image Modal ───────────────────────────────────── */}
       {selectedImage && (

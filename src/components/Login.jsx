@@ -97,32 +97,33 @@ export default function Login({ onLoginSuccess }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-12 fade-up relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center px-3.5 py-6 sm:py-12 fade-up relative overflow-hidden">
       {/* Background ambient glowing orbs */}
-      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-indigo-600/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-96 h-96 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 left-1/4 -translate-x-1/2 -translate-y-1/2 w-72 sm:w-96 h-72 sm:h-96 bg-indigo-600/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-1/4 right-1/4 translate-x-1/2 translate-y-1/2 w-72 sm:w-96 h-72 sm:h-96 bg-cyan-500/15 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="glass p-8 sm:p-10 max-w-md w-full relative z-10 shadow-2xl border border-white/10">
+      <div className="glass p-5 sm:p-8 md:p-10 max-w-md w-full relative z-10 shadow-2xl border border-white/10 rounded-2xl">
         {/* Brand header */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gradient-to-tr from-indigo-500/30 to-cyan-500/30 border border-white/10 mb-4 shadow-xl text-3xl">
+        <div className="text-center mb-6 sm:mb-8">
+          <div className="inline-flex items-center justify-center w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-tr from-indigo-500/30 to-cyan-500/30 border border-white/10 mb-3 sm:mb-4 shadow-xl text-2xl sm:text-3xl">
             🏛️
           </div>
-          <div className="inline-flex items-center gap-2 justify-center mb-1.5 w-full">
+          <div className="inline-flex items-center gap-2 justify-center mb-1 w-full">
             <span className="live-dot" />
-            <span className="text-xs text-cyan-400 font-bold tracking-widest uppercase">
+            <span className="text-[11px] sm:text-xs text-cyan-400 font-bold tracking-widest uppercase">
               Campus Fault Portal
             </span>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-extrabold gradient-text tracking-tight">
+          <h2 className="text-xl sm:text-3xl font-extrabold gradient-text tracking-tight">
             {mode === 'login' ? 'Single Sign-In' : 'Create Student Account'}
           </h2>
-          <p className="text-slate-400 text-xs sm:text-sm mt-1.5">
+          <p className="text-slate-400 text-xs sm:text-sm mt-1 sm:mt-1.5 leading-relaxed">
             {mode === 'login'
               ? 'Log in to report campus faults or manage infrastructure operations'
               : 'Register to report issues and track your ticket status in real-time'}
           </p>
         </div>
+
 
         {/* Tab switcher: Login / Register */}
         <div className="flex rounded-xl bg-slate-900/70 p-1 mb-6 border border-white/5">
@@ -286,25 +287,25 @@ export default function Login({ onLoginSuccess }) {
 
         {/* Demo Fast-Login Pills */}
         <div className="mt-6 pt-5 border-t border-white/5 text-center">
-          <p className="text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-2.5">
+          <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-slate-400 mb-2">
             Quick Demo Sign-In
           </p>
-          <div className="flex items-center justify-center gap-2">
+          <div className="grid grid-cols-2 gap-2">
             <button
               type="button"
               onClick={() => handleFillDemo('student')}
-              className="px-3 py-1.5 rounded-lg text-xs font-semibold glass border-indigo-500/30 text-indigo-300 hover:bg-indigo-500/20 hover:text-white transition-all cursor-pointer flex items-center gap-1.5"
+              className="px-2.5 py-2 rounded-xl text-xs font-semibold glass border-indigo-500/30 text-indigo-300 hover:bg-indigo-500/20 hover:text-white transition-all cursor-pointer flex items-center justify-center gap-1.5"
             >
               <span>🎓</span>
-              <span>Student (student)</span>
+              <span className="truncate">Student</span>
             </button>
             <button
               type="button"
               onClick={() => handleFillDemo('admin')}
-              className="px-3 py-1.5 rounded-lg text-xs font-semibold glass border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/20 hover:text-white transition-all cursor-pointer flex items-center gap-1.5"
+              className="px-2.5 py-2 rounded-xl text-xs font-semibold glass border-cyan-500/30 text-cyan-300 hover:bg-cyan-500/20 hover:text-white transition-all cursor-pointer flex items-center justify-center gap-1.5"
             >
               <span>🛡️</span>
-              <span>Admin (admin)</span>
+              <span className="truncate">Admin</span>
             </button>
           </div>
         </div>
@@ -312,3 +313,4 @@ export default function Login({ onLoginSuccess }) {
     </div>
   );
 }
+
