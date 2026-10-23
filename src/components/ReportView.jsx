@@ -9,8 +9,8 @@ export default function ReportView() {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess]       = useState(false);
   const [error, setError]           = useState('');
-  const cameraRef                   = useRef(null);
-  const galleryRef                  = useRef(null);
+  const fileRef                     = useRef(null);
+
 
 
   /* ── Image capture ───────────────────────────────────── */
@@ -110,60 +110,42 @@ export default function ReportView() {
           />
         </div>
 
-        {/* Camera / Gallery */}
+        {/* Photo Upload */}
         <div>
           <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1">
             Photo *
           </label>
 
           <input
-            ref={galleryRef}
+            ref={fileRef}
             type="file"
             accept="image/*"
-            className="hidden"
-            onChange={handleImageChange}
-          />
-          <input
-            ref={cameraRef}
-            type="file"
-            accept="image/*"
-            capture="environment"
             className="hidden"
             onChange={handleImageChange}
           />
 
           {preview ? (
-            <div className="glass p-4">
+            <div className="glass p-4 rounded-xl">
               <img
                 src={preview}
                 alt="Preview"
                 className="w-full max-h-56 object-cover rounded-lg shadow-lg mb-3"
               />
               <div className="flex items-center justify-between gap-2 pt-1 border-t border-white/5">
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() => cameraRef.current?.click()}
-                    className="px-2.5 py-1 rounded glass text-xs font-semibold text-slate-300 hover:text-white cursor-pointer"
-                  >
-                    📷 Retake
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => galleryRef.current?.click()}
-                    className="px-2.5 py-1 rounded glass text-xs font-semibold text-slate-300 hover:text-white cursor-pointer"
-                  >
-                    🖼️ Gallery
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => fileRef.current?.click()}
+                  className="px-2.5 py-1 rounded-lg glass text-xs font-semibold text-slate-300 hover:text-white cursor-pointer"
+                >
+                  🔄 Change Photo
+                </button>
                 <button
                   type="button"
                   className="text-xs text-rose-400 hover:text-rose-300 underline cursor-pointer"
                   onClick={() => {
                     setPreview(null);
                     setImageFile(null);
-                    if (cameraRef.current) cameraRef.current.value = '';
-                    if (galleryRef.current) galleryRef.current.value = '';
+                    if (fileRef.current) fileRef.current.value = '';
                   }}
                 >
                   Remove
@@ -171,38 +153,26 @@ export default function ReportView() {
               </div>
             </div>
           ) : (
-            <div className="glass p-5 flex flex-col items-center justify-center gap-3 border border-dashed border-white/15">
+            <div
+              onClick={() => fileRef.current?.click()}
+              className="glass p-6 flex flex-col items-center justify-center gap-3 border border-dashed border-white/15 hover:border-indigo-400 transition-all rounded-xl cursor-pointer group"
+            >
+              <div className="text-3xl group-hover:scale-110 transition-transform">📸</div>
               <div className="text-center">
-                <div className="text-3xl mb-1">📸</div>
-                <p className="text-sm font-semibold text-slate-200">
-                  Select a photo
+                <p className="text-sm font-semibold text-slate-200 group-hover:text-cyan-300 transition-colors">
+                  Tap to choose or take a photo
                 </p>
                 <p className="text-xs text-slate-400 mt-0.5">
-                  Take a photo or choose from device gallery
+                  Supports camera, gallery, and file upload
                 </p>
               </div>
-
-              <div className="flex items-center justify-center gap-2.5 w-full max-w-xs mt-1">
-                <button
-                  type="button"
-                  onClick={() => cameraRef.current?.click()}
-                  className="flex-1 py-2 px-3 rounded-lg bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/40 font-semibold text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                >
-                  <span>📷</span>
-                  <span>Take Photo</span>
-                </button>
-                <button
-                  type="button"
-                  onClick={() => galleryRef.current?.click()}
-                  className="flex-1 py-2 px-3 rounded-lg bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 font-semibold text-xs transition-all flex items-center justify-center gap-1.5 cursor-pointer"
-                >
-                  <span>🖼️</span>
-                  <span>Gallery</span>
-                </button>
-              </div>
+              <span className="mt-1 py-1.5 px-3.5 rounded-lg bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 font-semibold text-xs transition-all pointer-events-none group-hover:bg-indigo-500/30">
+                Select Photo
+              </span>
             </div>
           )}
         </div>
+
 
 
 

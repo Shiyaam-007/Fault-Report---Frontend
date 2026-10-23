@@ -52,10 +52,10 @@ export default function StudentDashboard({ studentUser, onLogout }) {
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState('');
   const [submitSuccess, setSubmitSuccess] = useState(false);
-  const cameraRef = useRef(null);
-  const galleryRef = useRef(null);
+  const fileRef = useRef(null);
 
   // Load student tickets
+
 
   const loadMyTickets = useCallback(async () => {
     setLoading(true);
@@ -493,19 +493,11 @@ export default function StudentDashboard({ studentUser, onLogout }) {
                       Fault Photo *
                     </label>
 
-                    {/* Hidden file inputs: one for gallery/files and one for direct camera */}
+                    {/* Universal image input: supports camera, gallery, and file browsing automatically on mobile & desktop */}
                     <input
-                      ref={galleryRef}
+                      ref={fileRef}
                       type="file"
                       accept="image/*"
-                      className="hidden"
-                      onChange={handleImageChange}
-                    />
-                    <input
-                      ref={cameraRef}
-                      type="file"
-                      accept="image/*"
-                      capture="environment"
                       className="hidden"
                       onChange={handleImageChange}
                     />
@@ -520,32 +512,21 @@ export default function StudentDashboard({ studentUser, onLogout }) {
                           />
                         </div>
                         <div className="flex flex-wrap items-center justify-between gap-2 pt-1 border-t border-white/5">
-                          <div className="flex items-center gap-2">
-                            <button
-                              type="button"
-                              onClick={() => cameraRef.current?.click()}
-                              className="px-3 py-1.5 rounded-lg glass text-xs font-semibold text-slate-300 hover:text-white transition-colors cursor-pointer flex items-center gap-1.5"
-                            >
-                              <span>📷</span>
-                              <span>Retake Photo</span>
-                            </button>
-                            <button
-                              type="button"
-                              onClick={() => galleryRef.current?.click()}
-                              className="px-3 py-1.5 rounded-lg glass text-xs font-semibold text-slate-300 hover:text-white transition-colors cursor-pointer flex items-center gap-1.5"
-                            >
-                              <span>🖼️</span>
-                              <span>Choose Different</span>
-                            </button>
-                          </div>
+                          <button
+                            type="button"
+                            onClick={() => fileRef.current?.click()}
+                            className="px-3 py-1.5 rounded-lg glass text-xs font-semibold text-slate-300 hover:text-white transition-colors cursor-pointer flex items-center gap-1.5"
+                          >
+                            <span>🔄</span>
+                            <span>Change Photo</span>
+                          </button>
                           <button
                             type="button"
                             className="text-xs text-rose-400 hover:text-rose-300 underline cursor-pointer"
                             onClick={() => {
                               setPreview(null);
                               setImageFile(null);
-                              if (cameraRef.current) cameraRef.current.value = '';
-                              if (galleryRef.current) galleryRef.current.value = '';
+                              if (fileRef.current) fileRef.current.value = '';
                             }}
                           >
                             Remove photo
@@ -553,40 +534,26 @@ export default function StudentDashboard({ studentUser, onLogout }) {
                         </div>
                       </div>
                     ) : (
-                      <div className="glass p-6 flex flex-col items-center justify-center gap-4 border border-dashed border-white/15 rounded-xl">
+                      <div
+                        onClick={() => fileRef.current?.click()}
+                        className="glass p-8 flex flex-col items-center justify-center gap-3 border border-dashed border-white/15 hover:border-indigo-400 transition-all rounded-xl cursor-pointer group"
+                      >
+                        <div className="text-4xl group-hover:scale-110 transition-transform">📸</div>
                         <div className="text-center">
-                          <div className="text-4xl mb-2">📸</div>
-                          <p className="text-sm font-semibold text-slate-200">
-                            Upload a photo of the problem
+                          <p className="text-sm font-semibold text-slate-200 group-hover:text-cyan-300 transition-colors">
+                            Tap to choose or take a photo
                           </p>
-                          <p className="text-xs text-slate-400 mt-0.5">
-                            Take a new picture or select an existing one from your device
+                          <p className="text-xs text-slate-400 mt-1">
+                            Supports camera capture, photo gallery, and file upload
                           </p>
                         </div>
-
-                        {/* Two dedicated action buttons */}
-                        <div className="flex items-center justify-center gap-3 w-full max-w-sm">
-                          <button
-                            type="button"
-                            onClick={() => cameraRef.current?.click()}
-                            className="flex-1 py-2.5 px-3 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/40 font-semibold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
-                          >
-                            <span>📷</span>
-                            <span>Take Photo</span>
-                          </button>
-
-                          <button
-                            type="button"
-                            onClick={() => galleryRef.current?.click()}
-                            className="flex-1 py-2.5 px-3 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 font-semibold text-xs transition-all flex items-center justify-center gap-2 cursor-pointer shadow-sm"
-                          >
-                            <span>🖼️</span>
-                            <span>From Gallery / Files</span>
-                          </button>
-                        </div>
+                        <span className="mt-2 py-2 px-4 rounded-xl bg-indigo-500/20 text-indigo-300 border border-indigo-500/40 font-semibold text-xs transition-all pointer-events-none group-hover:bg-indigo-500/30">
+                          Select Photo
+                        </span>
                       </div>
                     )}
                   </div>
+
 
 
                   {/* Submit Button */}
