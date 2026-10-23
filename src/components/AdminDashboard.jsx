@@ -130,17 +130,24 @@ export default function AdminDashboard({ adminUser, onLogout }) {
   const [updatingId, setUpdatingId] = useState(null);
   const [expandedId, setExpandedId] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [refreshing, setRefreshing] = useState(false);
+  const [justRefreshed, setJustRefreshed] = useState(false);
 
   const [sortOrder, setSortOrder]   = useState('asc');
 
   const load = useCallback(async () => {
+    setRefreshing(true);
+    setError('');
     try {
       const data = await fetchTickets();
       setTickets(data);
+      setJustRefreshed(true);
+      setTimeout(() => setJustRefreshed(false), 2000);
     } catch {
       setError('Could not load tickets. Is the backend running?');
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   }, []);
 
@@ -168,10 +175,14 @@ export default function AdminDashboard({ adminUser, onLogout }) {
   const visible = tickets
     .filter(t => {
       const matchFilter = filter === 'ALL' || t.status === filter;
-      const matchSearch = !search || t.title.toLowerCase().includes(search.toLowerCase());
+      const matchSearch =
+        !search ||
+        t.title.toLowerCase().includes(search.toLowerCase()) ||
+        (t.description && t.description.toLowerCase().includes(search.toLowerCase()));
       return matchFilter && matchSearch;
     })
     .sort((a, b) => (sortOrder === 'asc' ? a.id - b.id : b.id - a.id));
+
 
   const openEnlargedPhoto = (ticket) => {
     setSelectedImage({
@@ -202,11 +213,19 @@ export default function AdminDashboard({ adminUser, onLogout }) {
             <span className="hidden sm:inline">{tickets.length} total tickets</span>
             <button
               onClick={load}
-              className="px-3 py-1.5 glass rounded-lg text-slate-400 hover:text-white transition-colors text-xs font-semibold cursor-pointer"
+              disabled={refreshing}
+              className={`px-3 py-1.5 glass rounded-lg text-xs font-semibold cursor-pointer flex items-center gap-1.5 transition-all ${
+                justRefreshed
+                  ? 'border-emerald-500/50 text-emerald-300 bg-emerald-500/10'
+                  : 'text-slate-300 hover:text-white hover:border-cyan-400/50'
+              } ${refreshing ? 'opacity-70 cursor-not-allowed' : ''}`}
+              title="Refresh tickets list"
             >
-              ↻ Refresh
+              <span className={`inline-block ${refreshing ? 'animate-spin' : ''}`}>↻</span>
+              <span>{refreshing ? 'Refreshing…' : justRefreshed ? 'Updated!' : 'Refresh'}</span>
             </button>
           </div>
+
 
           {/* Admin User Badge & Logout */}
           <div className="flex items-center gap-3 pl-3 border-l border-white/10">
@@ -272,7 +291,18 @@ export default function AdminDashboard({ adminUser, onLogout }) {
           </div>
         )}
         {error && (
-          <div className="glass p-4 border-rose-500/40 text-rose-400 text-sm mb-4">⚠ {error}</div>
+          <div className="glass p-4 border-rose-500/40 text-rose-300 text-sm mb-4 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <span>⚠️</span>
+              <span>{error}</span>
+            </div>
+            <button
+              onClick={load}
+              className="px-3 py-1 bg-rose-500/20 hover:bg-rose-500/30 text-rose-200 text-xs font-bold rounded-lg transition-colors cursor-pointer"
+            >
+              Retry
+            </button>
+          </div>
         )}
 
         {/* ── Table ───────────────────────────────────── */}
@@ -320,7 +350,7 @@ export default function AdminDashboard({ adminUser, onLogout }) {
                         <td className="px-4 py-3 text-slate-500 font-mono text-xs">
                           #{ticket.id}
                         </td>
-                        <td className="px-4 py-3 font-semibold text-slate-200 max-w-[260px] truncate">
+                        <td className="px-4 py-3 font-semibold text-slate-200 max-w-[280px] truncate">
                           {ticket.title}
                         </td>
                         <td className="px-4 py-3 text-slate-500 text-xs hidden lg:table-cell">
@@ -354,6 +384,7 @@ export default function AdminDashboard({ adminUser, onLogout }) {
                       {expandedId === ticket.id && (
                         <tr key={`${ticket.id}-expand`} className="bg-white/3">
                           <td colSpan={5} className="px-6 py-5">
+
                             <div className="flex flex-wrap gap-6">
                               {/* Photo */}
                               {ticket.hasPhoto && (
@@ -387,17 +418,30 @@ export default function AdminDashboard({ adminUser, onLogout }) {
                               )}
                               {/* Description + meta */}
                               <div className="flex-1 min-w-[200px]">
+                                <div className="mb-3 p-3 rounded-lg bg-white/5 border border-white/5 inline-flex flex-wrap items-center gap-4 text-xs">
+                                  <div>
+                                    <span className="text-slate-400">Ticket ID: </span>
+                                    <span className="font-mono text-cyan-400 font-bold">#{ticket.id}</span>
+                                  </div>
+                                  <div>
+                                    <span className="text-slate-400">Created: </span>
+                                    <span className="text-slate-300">{new Date(ticket.createdAt).toLocaleString()}</span>
+                                  </div>
+                                </div>
+
                                 <p className="text-xs text-slate-500 mb-1 uppercase tracking-wider font-semibold">
                                   Description
                                 </p>
                                 <p className="text-slate-300 text-sm mb-4 leading-relaxed">
                                   {ticket.description || 'No description provided.'}
                                 </p>
-                                <p className="text-xs text-slate-600 mt-1">
-                                  Updated: {new Date(ticket.updatedAt).toLocaleString()}
+                                <p className="text-xs text-slate-500 mt-1">
+                                  Last Status Update: {new Date(ticket.updatedAt).toLocaleString()}
                                 </p>
                               </div>
+
                             </div>
+
                           </td>
                         </tr>
                       )}
