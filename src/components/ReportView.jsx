@@ -1,8 +1,6 @@
 import { useState, useRef } from 'react';
 import { createTicket } from '../api';
 
-const REPORTER_ID = 1; // Hard-coded for MVP (no auth)
-
 export default function ReportView() {
   const [title, setTitle]           = useState('');
   const [description, setDescription] = useState('');
@@ -31,7 +29,6 @@ export default function ReportView() {
     const fd = new FormData();
     fd.append('title', title);
     fd.append('description', description);
-    fd.append('reporterId', REPORTER_ID);
     fd.append('image', imageFile);
 
     setSubmitting(true);

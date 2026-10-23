@@ -2,8 +2,8 @@
  * Centralised API layer — all fetch calls live here.
  * Vite proxies /api → http://localhost:8080 in development.
  */
-const API_HOST = import.meta.env.VITE_API_URL ? import.meta.env.VITE_API_URL.replace(/\/$/, '') : '';
-const BASE = `${API_HOST}/api`;
+const rawApiUrl = (import.meta.env.VITE_API_URL || '').trim().replace(/\/$/, '');
+const BASE = rawApiUrl ? (rawApiUrl.endsWith('/api') ? rawApiUrl : `${rawApiUrl}/api`) : '/api';
 
 export async function loginAdmin({ username, password }) {
   try {
@@ -32,13 +32,13 @@ export async function loginAdmin({ username, password }) {
   const u = (username || '').trim().toLowerCase();
   const p = (password || '').trim();
   if (
-    (u === 'admin' || u === 'bob' || u === 'admin@campus.edu' || u === 'bob admin') &&
+    (u === 'admin' || u === 'bob' || u === 'admin@campus.edu' ) &&
     (p === 'admin' || p === 'admin123' || p === 'password' || p === 'admin@123')
   ) {
     return {
       token: 'admin-token-' + Date.now(),
       id: 2,
-      name: 'Bob Admin',
+      name: 'Admin',
       username: username,
       role: 'ADMIN',
       message: 'Login successful',

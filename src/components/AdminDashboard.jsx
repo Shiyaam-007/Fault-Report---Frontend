@@ -131,6 +131,8 @@ export default function AdminDashboard({ adminUser, onLogout }) {
   const [expandedId, setExpandedId] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 
+  const [sortOrder, setSortOrder]   = useState('asc');
+
   const load = useCallback(async () => {
     try {
       const data = await fetchTickets();
@@ -163,11 +165,13 @@ export default function AdminDashboard({ adminUser, onLogout }) {
     RESOLVED:    tickets.filter(t => t.status === 'RESOLVED').length,
   };
 
-  const visible = tickets.filter(t => {
-    const matchFilter = filter === 'ALL' || t.status === filter;
-    const matchSearch = !search || t.title.toLowerCase().includes(search.toLowerCase());
-    return matchFilter && matchSearch;
-  });
+  const visible = tickets
+    .filter(t => {
+      const matchFilter = filter === 'ALL' || t.status === filter;
+      const matchSearch = !search || t.title.toLowerCase().includes(search.toLowerCase());
+      return matchFilter && matchSearch;
+    })
+    .sort((a, b) => (sortOrder === 'asc' ? a.id - b.id : b.id - a.id));
 
   const openEnlargedPhoto = (ticket) => {
     setSelectedImage({
@@ -278,7 +282,18 @@ export default function AdminDashboard({ adminUser, onLogout }) {
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-white/8 text-xs text-slate-500 uppercase tracking-wider">
-                    <th className="text-left px-4 py-3">#</th>
+                    <th
+                      className="text-left px-4 py-3 cursor-pointer select-none hover:text-slate-300 transition-colors"
+                      onClick={() => setSortOrder(prev => (prev === 'asc' ? 'desc' : 'asc'))}
+                      title={`Sort by Ticket # (${sortOrder === 'asc' ? 'Ascending' : 'Descending'})`}
+                    >
+                      <span className="inline-flex items-center gap-1.5">
+                        <span>#</span>
+                        <span className="text-[10px] text-cyan-400 font-bold">
+                          {sortOrder === 'asc' ? '▲' : '▼'}
+                        </span>
+                      </span>
+                    </th>
                     <th className="text-left px-4 py-3">Title</th>
                     <th className="text-left px-4 py-3 hidden lg:table-cell">Created</th>
                     <th className="text-left px-4 py-3">Photo</th>
