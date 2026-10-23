@@ -13,6 +13,8 @@ export default function Login({ onLoginSuccess }) {
   const [regSuccess, setRegSuccess] = useState('');
 
   const handleFillDemo = (type) => {
+
+
     setError('');
     setRegSuccess('');
     if (type === 'student') {
@@ -64,6 +66,9 @@ export default function Login({ onLoginSuccess }) {
           sessionStorage.setItem('campus_fault_user', JSON.stringify(sessionData));
         }
 
+        setUsername('');
+        setPassword('');
+        setName('');
         onLoginSuccess(sessionData);
       } else {
         const userData = await loginUser({ username, password });
@@ -79,9 +84,12 @@ export default function Login({ onLoginSuccess }) {
           sessionStorage.setItem('campus_fault_user', JSON.stringify(sessionData));
         }
 
+        setUsername('');
+        setPassword('');
         onLoginSuccess(sessionData);
       }
     } catch (err) {
+
       setError(err.message || 'Authentication failed. Please verify credentials.');
     } finally {
       setLoading(false);
@@ -159,7 +167,7 @@ export default function Login({ onLoginSuccess }) {
         )}
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit} className="space-y-4" autoComplete="off">
           {mode === 'register' && (
             <div>
               <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-1.5">
@@ -177,6 +185,7 @@ export default function Login({ onLoginSuccess }) {
                   placeholder="e.g. Alice Walker"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  autoComplete="off"
                   required={mode === 'register'}
                 />
               </div>
@@ -199,7 +208,7 @@ export default function Login({ onLoginSuccess }) {
                 placeholder={mode === 'register' ? 'Choose a unique username' : 'Enter username (e.g. student or admin)'}
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                autoComplete="username"
+                autoComplete="off"
                 required
               />
             </div>
@@ -221,9 +230,10 @@ export default function Login({ onLoginSuccess }) {
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+                autoComplete="new-password"
                 required
               />
+
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}

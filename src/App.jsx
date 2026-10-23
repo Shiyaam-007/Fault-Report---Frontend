@@ -18,11 +18,14 @@ export default function App() {
     }
   });
 
+  const [logoutKey, setLogoutKey] = useState(0);
+
   const handleLogout = () => {
     localStorage.removeItem('campus_fault_user');
     sessionStorage.removeItem('campus_fault_user');
     localStorage.removeItem('campus_fault_admin');
     sessionStorage.removeItem('campus_fault_admin');
+    setLogoutKey(prev => prev + 1);
     setCurrentUser(null);
   };
 
@@ -32,8 +35,9 @@ export default function App() {
 
   // ── Unauthenticated: Single unified login for all users ──
   if (!currentUser) {
-    return <Login onLoginSuccess={handleLoginSuccess} />;
+    return <Login key={logoutKey} onLoginSuccess={handleLoginSuccess} />;
   }
+
 
   // ── Authenticated: Route according to role in users table ──
   if (currentUser.role === 'ADMIN') {
